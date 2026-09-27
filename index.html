@@ -1,315 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mohamed&Sara KatbKetab Invitation</title>
-
-  <!-- Font -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mohamed & Sara — Invitation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
-
   <style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body{
-      height:100vh;
-      overflow:hidden;
-      display:flex;
-      justify-content:center;
-      align-items:center;
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    
       background:
-      linear-gradient(rgba(255,248,240,0.45), rgba(255,248,240,0.45)),
-      url("background.jpg");
-      background-size:cover;
-      background-position:center;
-      font-family:'Cinzel', serif;
-      position:relative;
+        linear-gradient(
+          rgba(255, 248, 240, 0.45),
+          rgba(255, 248, 240, 0.45)
+        ),
+        url("background.jpg");
+
+      background-size: cover;
+      background-position: center;
+      font-family: 'Cinzel', serif;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* ================= FLOATING ICONS ================= */
-
-    .floating-icons{
-      position:absolute;
-      width:100%;
-      height:100%;
-      top:0;
-      left:0;
-      overflow:hidden;
-      pointer-events:none;
+    .fade-cover {
+      position: fixed;
+      inset: 0;
+      background: #fbf3e4;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 20;
+      transition: opacity 0.9s ease;
     }
 
-    .floating-icons span{
-      position:absolute;
-      bottom:-100px;
-      color:rgba(122,92,69,0.18);
-      font-size:24px;
-      animation:float 15s linear infinite;
+    .fade-cover.show {
+      opacity: 1;
     }
 
-    .floating-icons span:nth-child(1){
-      left:10%;
-      animation-duration:12s;
+    .hint {
+      margin-top: 22px;
+      color: #4b2d06;
+      font-size: 18px;
+      letter-spacing: 4px;
+      /* opacity: 0.75; */
+      font-weight: bolder;
+      animation: pulseHint 2.4s ease-in-out infinite;
+      z-index: 2;
+      text-align: center;
+      transition: opacity 0.4s ease;
     }
 
-    .floating-icons span:nth-child(2){
-      left:25%;
-      animation-duration:18s;
-    }
+    @keyframes pulseHint {
 
-    .floating-icons span:nth-child(3){
-      left:45%;
-      animation-duration:14s;
-    }
-
-    .floating-icons span:nth-child(4){
-      left:65%;
-      animation-duration:20s;
-    }
-
-    .floating-icons span:nth-child(5){
-      left:85%;
-      animation-duration:16s;
-    }
-
-    /* ================= CONTAINER ================= */
-
-    .container{
-      text-align:center;
-      z-index:2;
-      animation:fadeIn 1.5s ease;
-    }
-
-    .title{
-      color:#6B4F3A;
-      font-size:24px;
-      letter-spacing:5px;
-      margin-bottom:45px;
-      text-shadow:0 0 12px rgba(255,255,255,0.6);
-    }
-
-    /* ================= ENVELOPE ================= */
-
-    .envelope-wrapper{
-      position:relative;
-      width:340px;
-      height:220px;
-      cursor:pointer;
-      transition:0.5s;
-      perspective:1000px;
-    }
-
-    .envelope-wrapper:hover{
-      transform:scale(1.03);
-    }
-
-    .envelope{
-      position:relative;
-      width:100%;
-      height:100%;
-    }
-
-    /* Main Envelope */
-
-    .base{
-      position:absolute;
-      width:100%;
-      height:100%;
-      background:#E9D8C6;
-      border-radius:8px;
-      overflow:hidden;
-      box-shadow:0 20px 40px rgba(122,92,69,0.18);
-    }
-
-    /* Left Fold */
-
-    .left{
-      position:absolute;
-      width:50%;
-      height:100%;
-      background:#DCC3A8;
-      clip-path:polygon(0 0, 100% 50%, 0 100%);
-      left:0;
-      top:0;
-    }
-
-    /* Right Fold */
-
-    .right{
-      position:absolute;
-      width:50%;
-      height:100%;
-      background:#CFAE8D;
-      clip-path:polygon(100% 0, 0 50%, 100% 100%);
-      right:0;
-      top:0;
-    }
-
-    /* Bottom Fold */
-
-    .bottom{
-      position:absolute;
-      width:100%;
-      height:55%;
-      background:#E2CBB3;
-      bottom:0;
-      clip-path:polygon(0 100%, 50% 0, 100% 100%);
-    }
-
-    /* Top Flap */
-
-    .flap{
-      position:absolute;
-      width:100%;
-      height:55%;
-      background:#C89F7A;
-      top:0;
-      left:0;
-      clip-path:polygon(0 0, 50% 100%, 100% 0);
-      transform-origin:top;
-      transition:0.8s ease;
-      z-index:5;
-    }
-
-    /* Open Animation */
-
-    .open .flap{
-      transform:rotateX(180deg);
-    }
-
-    /* Glow */
-
-    .envelope-wrapper::after{
-      content:"";
-      position:absolute;
-      width:120%;
-      height:120%;
-      top:-10%;
-      left:-10%;
-      border-radius:20px;
-      background:rgba(255,255,255,0.18);
-      filter:blur(35px);
-      z-index:-1;
-    }
-
-    /* ================= ANIMATIONS ================= */
-
-    @keyframes float{
-
-      0%{
-        transform:translateY(0) rotate(0deg);
-        opacity:0;
+      0%,
+      100% {
+        opacity: 0.45;
       }
 
-      10%{
-        opacity:1;
+      50% {
+        opacity: 0.9;
       }
-
-      100%{
-        transform:translateY(-120vh) rotate(360deg);
-        opacity:0;
-      }
-
     }
 
-    @keyframes fadeIn{
-
-      from{
-        opacity:0;
-        transform:translateY(30px);
-      }
-
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-
+    .stage {
+      position: relative;
+      width: min(88vw, 420px);
+      aspect-ratio: 1123/1401;
+      cursor: pointer;
+      filter: drop-shadow(0 20px 35px rgba(90, 65, 30, 0.35));
+      transition: transform 0.4s ease;
     }
 
-    /* ================= MOBILE ================= */
-
-    @media(max-width:768px){
-
-      .envelope-wrapper{
-        width:280px;
-        height:190px;
-      }
-
-      .title{
-        font-size:18px;
-        letter-spacing:3px;
-      }
-
+    .stage:hover {
+      transform: scale(1.015);
     }
 
+    .stage.opening {
+      animation: liftOpen 1.35s cubic-bezier(.55, .05, .25, 1) forwards;
+      pointer-events: none;
+    }
+
+    @keyframes liftOpen {
+      0% {
+        transform: scale(1) translateY(0) rotate(0deg);
+        filter: drop-shadow(0 20px 35px rgba(90, 65, 30, 0.35)) brightness(1);
+      }
+
+      35% {
+        transform: scale(1.04) translateY(-4px) rotate(-0.3deg);
+        filter: drop-shadow(0 26px 40px rgba(90, 65, 30, 0.4)) brightness(1.1);
+      }
+
+      100% {
+        transform: scale(1.22) translateY(-40px) rotate(0.4deg);
+        filter: drop-shadow(0 10px 20px rgba(90, 65, 30, 0)) brightness(1.5) blur(3px);
+        opacity: 0;
+      }
+    }
+
+    .photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      padding-top: 20%;
+      border-radius: 4px;
+      filter: contrast(1.06) saturate(1.05);
+    }
+
+    .seal-boost {
+      position: absolute;
+      left: 51%;
+      top: 53.6%;
+      width: 15.5%;
+      height: 12%;
+      transform: translate(-50%, -50%) rotate(-3deg);
+      z-index: 2;
+      border-radius: 50%;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 40%),
+        radial-gradient(circle at 72% 80%, rgba(70, 45, 15, 0.55) 0%, rgba(70, 45, 15, 0) 55%);
+      mix-blend-mode: soft-light;
+      box-shadow:
+        inset 3px 5px 7px rgba(255, 252, 240, 0.55),
+        inset -6px -8px 11px rgba(70, 45, 15, 0.55),
+        0 4px 7px rgba(60, 38, 14, 0.35);
+      transition: opacity 0.4s ease;
+    }
+
+    .glow {
+      position: absolute;
+      left: 50.3%;
+      top: 53.5%;
+      width: 26%;
+      height: 22%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 244, 214, 0.55) 0%, rgba(255, 244, 214, 0) 70%);
+      pointer-events: none;
+      animation: breathe 2.6s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+        opacity: 0.35;
+        transform: translate(-50%, -50%) scale(0.92);
+      }
+
+      50% {
+        opacity: 0.85;
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+    }
+
+    .ripple {
+      position: absolute;
+      left: 50.3%;
+      top: 53.6%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 250, 225, 0.95) 0%, rgba(255, 230, 170, 0.55) 40%, rgba(255, 230, 170, 0) 72%);
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .stage.opening .ripple {
+      animation: rippleBurst 1.2s ease-out forwards;
+    }
+
+    .stage.opening .glow,
+    .stage.opening .seal-boost {
+      opacity: 0;
+    }
+
+    @keyframes rippleBurst {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+
+      12% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(36);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- Floating Icons -->
+  <div class="fade-cover" id="fadeCover"></div>
+  <div class="hint" id="hint">TAP TO OPEN</div>
 
-  <div class="floating-icons">
-
-    <span>❀</span>
-    <span>❤</span>
-    <span>❀</span>
-    <span>❤</span>
-    <span>❀</span>
-
+  <div class="stage" id="stage">
+    <img class="photo" src="envlope.png" <div class="seal-boost">
+  </div>
+  <div class="glow"></div>
+  <div class="ripple"></div>
   </div>
 
-  <!-- Main Content -->
-
-  <div class="container">
-
-    <div class="title">
-      Open The Invitation
-    </div>
-
-    <div class="envelope-wrapper" id="envelope">
-
-      <div class="envelope">
-
-        <div class="base"></div>
-
-        <div class="left"></div>
-
-        <div class="right"></div>
-
-        <div class="bottom"></div>
-
-        <div class="flap"></div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- Script -->
 
   <script>
+    const stage = document.getElementById('stage');
+    const hint = document.getElementById('hint');
+    const fadeCover = document.getElementById('fadeCover');
+    let opened = false;
 
-    const envelope = document.getElementById("envelope");
+    stage.addEventListener('click', () => {
+      if (opened) return;
+      opened = true;
 
-    envelope.addEventListener("click", () => {
-
-      envelope.classList.add("open");
+      stage.classList.add('opening');
+      hint.style.opacity = '0';
 
       setTimeout(() => {
+        fadeCover.classList.add('show');
+      }, 700);
 
-        window.location.href = "main.html";
-
-      }, 850);
-
+      setTimeout(() => {
+        window.location.href = 'main.html';
+      }, 1650);
     });
-
   </script>
 
 </body>
+
 </html>
